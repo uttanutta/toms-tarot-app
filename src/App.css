@@ -3,14 +3,14 @@
 }
 
 body, label {
-	font: 14px "IM FELL English", sans-serif;
+	font: 14pt "IM FELL English", sans-serif;
 }
 ol, ul {
 	padding-left: 30px;
 }
 .status {
-	margin-bottom: 10px;
+	margin-bottom: 14px;
 }
 select, input {
-	font: 14px "IM FELL English", sans-serif;
+	font: 14pt "IM FELL English", sans-serif;
 }
