@@ -5,14 +5,42 @@ import { cardData } from "./data";
 function Interpretation(props){
   return(
     <div>
-      <br/>
-        {<img src={(props.result[0]) ? props.result[0].Image : ""} height="250px"/>}
-        <p>Interpretation&nbsp;:&nbsp;
-        {(props.result[0]) ? props.result[0].Title : ""}
-        <br/>
-      </p>        
-      <p><strong>Normal</strong>&nbsp;: {(props.result[0]) ? props.result[0].Normal: ""}</p> 
-      <p><strong>Reversed</strong>&nbsp;: {(props.result[0]) ? props.result[0].Reversed : ""}</p>      
+      <div id="Interpretation" className="pHidden">
+        <div>
+          <button id="invertButton" className="pick"
+            onClick={()=>
+              {if (document.getElementById('cardImage').className == 'Normal')
+                {document.getElementById('cardImage').className = 'Reversed';
+                document.getElementById('invertButton').innerHTML='Switch to normal presentation';
+                document.getElementById('NormalInterpretation').className= 'pHidden';
+                document.getElementById('ReversedInterpretation').className='pVisibleInline';
+                document.getElementById("ordinal-select").focus();
+              }
+              else
+                {document.getElementById('cardImage').className= 'Normal';
+                document.getElementById('invertButton').innerHTML='Switch to reversed presentation';
+                document.getElementById('NormalInterpretation').className= 'pVisibleInline';
+                document.getElementById('ReversedInterpretation').className='pHidden';
+                document.getElementById("ordinal-select").focus();
+                }
+              }
+            }
+            >Switch to reversed presentation
+          </button>           
+        </div>
+          {<img src={(props.result[0]) ? props.result[0].Image : ""}  id="cardImage" className="Normal"/>}
+          <br/>        
+        <div  id="NormalInterpretation" className="pVisibleInline">
+          Interpretation&nbsp;:&nbsp;
+            {(props.result[0]) ? props.result[0].Title : ""}&nbsp;<strong>(Normal)</strong><br/>
+            {(props.result[0]) ? props.result[0].Normal: ""}
+        </div> 
+        <div  id="ReversedInterpretation" className="pHidden">
+          Interpretation&nbsp;:&nbsp;
+            {(props.result[0]) ? props.result[0].Title : ""}&nbsp;<strong>(Reversed)</strong><br/>
+            {(props.result[0]) ? props.result[0].Reversed : ""}
+        </div>  
+      </div>       
     </div>  
   )
 }
@@ -21,11 +49,14 @@ class TarotApp extends React.Component {
   //This top-level class is also named as the export default at the EOF
   constructor(props){
     super(props)
+    const deckCopy = cardData.map((x) => x);
     this.state = {
       selectedSuit: null,
-      deck: cardData,
+      deck: deckCopy,
+      picked: [],
       remainingCardsBySuit: null,
-      selectedOrdinal: 10,
+      selectedOrdinal: null,
+      presentation: "Normal",
     }
   }
   
@@ -38,22 +69,44 @@ class TarotApp extends React.Component {
 
   handleSuitChange(e) {   
     const newSuit =  e.target.value;
-    this.setState({selectedSuit: newSuit,remainingCardsBySuit: this.getAvailableOrdinals(newSuit),selectedOrdinal: ""});
+    this.setState({
+      selectedSuit: newSuit,
+      remainingCardsBySuit: this.getAvailableOrdinals(newSuit),
+      selectedOrdinal: null});
+    document.getElementById('Interpretation').className='pHidden'
   }  
+
+  handleReset(){
+    const deckCopy = cardData.map((x) => x);
+    this.setState({
+      deck: deckCopy,
+      picked: []
+    })
+  }
+  handleCardPicked(e){
+    var index = this.state.deck.findIndex(x => x.Suit == this.state.selectedSuit && x.Ordinal == this.state.selectedOrdinal);
+    var pickedCard=this.state.deck.splice(index,1)
+    pickedCard[0].Presentation=document.getElementById('cardImage').className;
+    this.setState({
+      picked:this.state.picked.concat(pickedCard),
+    })
+    document.getElementById("ordinal-select").focus();
+  }
 
   handleOrdinalChange(e) {   
     const newOrdinal =  e.target.value;
     this.setState({selectedOrdinal: newOrdinal});
+    {newOrdinal ? document.getElementById('Interpretation').className='pVisibleInline': document.getElementById('Interpretation').className='pHidden'}
   }  
   render() {
     const currentSuit = this.state.selectedSuit
     const currentOrdinal = this.state.selectedOrdinal
-    const filteredCards = this.state.remainingCardsBySuit
+    //const filteredCards = this.state.remainingCardsBySuit
     const selectedOrdinal = this.state.selectedOrdinal
     const filteredOrdinals = this.state.deck.filter(
       (o) => o.Suit === currentSuit
     );
-    console.log(this.state.deck[0].Normal)
+    //console.log(this.state.deck[0].Normal)
     const filteredCard = this.state.deck.filter(
             (o) => o.Ordinal == selectedOrdinal && o.Suit == currentSuit
     );
@@ -74,7 +127,12 @@ class TarotApp extends React.Component {
         /> 
         <Interpretation
           result={filteredCard}
-        />           
+        />  
+        <Pick 
+          pickedCards={this.state.picked}
+          handleCardPicked={(e) => this.handleCardPicked(e)}
+          handleReset={() => this.handleReset()}
+        />         
       </div>
 
     );
@@ -116,14 +174,25 @@ function Ordinals(props){
 }
 
 function Pick(props){
-  //console.log(props);
   return(
-    <span>
-    <button className="pick" onClick={props.onClick}>
-    Pick
-  </button>
-  &nbsp;
-  </span>
+    <div id="Pick">
+      <button className="pick" onClick={props.handleCardPicked}>
+        Pick
+      </button>&nbsp;
+
+      <div>
+        <p>Your picks:</p>
+            {props.pickedCards.map((data, key) => {  
+              return (
+                <div key={data.Id}><strong>{data.Title},&nbsp;({data.Presentation}):</strong>&nbsp;{data.Presentation=="Normal"? data.Normal: data.Reversed}</div>
+              );
+            })}
+      </div>   
+      <button className="reset" onClick={props.handleReset}>
+        Reset
+      </button>
+    </div>
+  
   )
 }
 export default TarotApp;

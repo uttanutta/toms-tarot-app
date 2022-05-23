@@ -317,7 +317,7 @@ export const cardData = [
         "OrdinalName": "IV",
         "Normal": "They are for once almost on the surface - country life, repose, concord, harmony, prosperity, peace, and the perfected work of these; unexpected good fortune.",
         "Reversed": "The meaning remains unaltered; it is prosperity, increase, felicity, beauty, embellishment.  A married woman will have beautiful children.",
-        "Image":"https://en.wikipedia.org/wiki/File:Wands04.jpg"
+        "Image":"https://upload.wikimedia.org/wikipedia/commons/a/a4/Wands04.jpg"
     },
     {
         "Id": 33,
@@ -575,7 +575,7 @@ export const cardData = [
         "Suit": "Trumps",
         "Ordinal": 1,
         "OrdinalName": "I (The Magician)",
-        "Normal": "Skill, dipolmacy, address; sickness, pain loss; disaster, self-confidence, will; the Querent, if male.",
+        "Normal": "Skill, diplomacy, address; sickness, pain loss; disaster, self-confidence, will; the Querent, if male.",
         "Reversed": "Physician, Magus, mental disease, disgrace, disquiet",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg"
     },
@@ -595,7 +595,7 @@ export const cardData = [
         "Suit": "Trumps",
         "Ordinal": 3,
         "OrdinalName": "III (The Empress)",
-        "Normal": "Secrets, mystery, the future as yet unrevealed; the woman who interests of querent, if male. The querent if female; silence, tenacity, wisdom, science",
+        "Normal": "Secrets, mystery, the future as yet unrevealed; the woman who interests the querent, if male. The querent if female; silence, tenacity, wisdom, science",
         "Reversed": "Passion, moral or physical ardour, conceit, surface knowledge",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg"
     },
@@ -696,7 +696,7 @@ export const cardData = [
         "Ordinal": 13,
         "OrdinalName": "XIII (Death)",
         "Normal": "End, mortality, destruction, corruption.",
-        "Reversed": "inertia, sleep, lethargy, Petrification , somnambulism.",
+        "Reversed": "inertia, sleep, lethargy, petrification , somnambulism.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg"
     },
     {

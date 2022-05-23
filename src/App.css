@@ -8,9 +8,28 @@ body, label {
 ol, ul {
 	padding-left: 30px;
 }
+div {
+	margin: 5px;
+}
 .status {
 	margin-bottom: 14px;
 }
-select, input {
+#cardImage{
+	max-width: 200px;
+	width:30%;
+}
+select, input, button {
 	font: 14pt "IM FELL English", sans-serif;
+}
+.Normal{
+	transform: rotate(0deg);
+}
+.Reversed{
+	transform: rotate(180deg);
+}
+.pHidden{
+	display:none;
+}
+.pVisibleInline{
+	display:inline;
 }
