@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/toms-tarot-app/static/css/main.1adc0c9a.css",
+    "main.css": "/toms-tarot-app/static/css/main.e54da491.css",
     "main.js": "/toms-tarot-app/static/js/main.d310ce22.js",
     "index.html": "/toms-tarot-app/index.html",
-    "main.1adc0c9a.css.map": "/toms-tarot-app/static/css/main.1adc0c9a.css.map",
+    "main.e54da491.css.map": "/toms-tarot-app/static/css/main.e54da491.css.map",
     "main.d310ce22.js.map": "/toms-tarot-app/static/js/main.d310ce22.js.map"
   },
   "entrypoints": [
-    "static/css/main.1adc0c9a.css",
+    "static/css/main.e54da491.css",
     "static/js/main.d310ce22.js"
   ]
 }
