@@ -4,6 +4,8 @@
 
 body, label {
 	font: 14pt "IM FELL English", sans-serif;
+	margin-left: 25%;
+	margin-right: 25%;
 }
 ol, ul {
 	padding-left: 30px;
@@ -32,4 +34,8 @@ select, input, button {
 }
 .pVisibleInline{
 	display:inline;
+}
+.LongDescription{
+	font: 13pt "IM FELL English", sans-serif;
+	color: #888;
 }

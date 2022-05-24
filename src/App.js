@@ -3,6 +3,9 @@ import React from 'react';
 import { cardData } from "./data";
 
 function Interpretation(props){
+  const genderedCard = props.result[0] && props.result[0].GenderedCard != "Non-specific";
+  const ldIntro="<b>Full description of the card and its symbols:</b>&nbsp;";
+  const LongDescription = props.result[0]? ldIntro + props.result[0].Description : "";
   return(
     <div>
       <div id="Interpretation" className="pHidden">
@@ -29,17 +32,23 @@ function Interpretation(props){
           </button>           
         </div>
           {<img src={(props.result[0]) ? props.result[0].Image : ""}  id="cardImage" className="Normal"/>}
-          <br/>        
+          <br/>     
+          <div  id="Gendered" className="gendered">
+            {genderedCard ? <span>This card also represents the {props.result[0].GenderedCard} gender.</span> : ""} 
+          </div>          
         <div  id="NormalInterpretation" className="pVisibleInline">
-          Interpretation&nbsp;:&nbsp;
+          Divinatory Meaning&nbsp;:&nbsp;
             {(props.result[0]) ? props.result[0].Title : ""}&nbsp;<strong>(Normal)</strong><br/>
             {(props.result[0]) ? props.result[0].Normal: ""}
         </div> 
         <div  id="ReversedInterpretation" className="pHidden">
-          Interpretation&nbsp;:&nbsp;
+          Divinatory Meaning&nbsp;:&nbsp;
             {(props.result[0]) ? props.result[0].Title : ""}&nbsp;<strong>(Reversed)</strong><br/>
             {(props.result[0]) ? props.result[0].Reversed : ""}
         </div>  
+        <div id="LongDescription">            
+          {(props.result[0]) ? <p className="LongDescription" dangerouslySetInnerHTML={{__html: LongDescription}}></p> : ""}
+        </div>
       </div>       
     </div>  
   )
