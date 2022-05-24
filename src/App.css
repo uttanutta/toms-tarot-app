@@ -20,6 +20,26 @@ div {
 	max-width: 200px;
 	width:80%;
 }
+.thumb{
+	max-width: 100px;
+	width:50%;
+}
+.floatedLeft{
+	float: left; 
+}
+.clearFloat{
+	clear: left; 
+}
+.NarrowDiv30pc{
+	width:20%; 
+	text-align: right; 
+	padding: 0 12px;
+}
+.NarrowDiv60pc{
+	width:70%; 
+	text-align: left; 
+	padding: 0 12px;
+}
 select, input, button {
 	font: 14pt "IM FELL English", sans-serif;
 }
