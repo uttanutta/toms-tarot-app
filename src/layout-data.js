@@ -45,13 +45,13 @@ export const layout = [
         "Id": 8,
         "Title":"Themself",
         "Action":"represents the Significator",
-        "CrossMeaning":"This signifies the Significator themselves&#8212;whether person or thing-and shews its position or attitude in the circumstances."
+        "CrossMeaning":"This signifies the Significator themselves-whether person or thing-and shews its position or attitude in the circumstances."
     },
     {
         "Id": 9,
         "Title":"Their House",
         "Action":"represents their house",
-        "CrossMeaning":"This signifies their environment and the tendencies at work therein which have an effect on the matter&#8212;for instance, their position in life, the influence of immediate friends, and so forth."
+        "CrossMeaning":"This signifies their environment and the tendencies at work therein which have an effect on the matter-for instance, their position in life, the influence of immediate friends, and so forth."
     },
     {
         "Id": 10,
