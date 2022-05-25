@@ -285,7 +285,7 @@ export const cardData = [
         "OrdinalName": "X",
         "GenderedCard": "Non-specific",
         "Normal": "Contentment, repose of the entire heart; the perfection of that state; if with several picture cards, a person who’s taking charge of the querent’s interests; also the town, village or country inhabited by the  querent.  For a male querent, a good marriage and beyond his expectations.",
-        "Reversed": "PRepose of the false heart, indignation, violence, sorrow.",
+        "Reversed": "Repose of the false heart, indignation, violence, sorrow.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/8/84/Cups10.jpg",
         "Description":"Appearance of Cups in a rainbow; it is contemplated in wonder and ecstacy by a man and woman below, evidently husband and wife. His right arm is about her; his left is raised upward; she raises her right arm. The two children dancing near them have not observed the prodigy but are happy after their own manner. There is a home-scene beyond."
     },
@@ -517,7 +517,7 @@ export const cardData = [
 		"Gendered":true,
         "GenderedCard": "Non-specific",
         "Normal": "Triumph, The excessive degree in everything conquest, triumph of force.  It is a card of great force, in love as well as in hatred; it can indicate great prosperity or great misery.",
-        "Reversed": "The same, but the results are disastrous; another account says conception, childbirth, augmentation, multiplicity.  For a woman, marriage broken off through her own imprudence.",
+        "Reversed": "The same (triumph, an excessive degree in everything conquest, triumph of force), but the results are disastrous; another account says conception, childbirth, augmentation, multiplicity.  For a woman, marriage broken off through her own imprudence.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/1/1a/Swords01.jpg",
         "Description":"A hand issues from a cloud, grasping as word, the point of which is encircled by a crown."
     },
@@ -565,7 +565,7 @@ export const cardData = [
         "OrdinalName": "V",
         "GenderedCard": "Non-specific",
         "Normal": "Degradation, destruction, reversal, infamy, dishonour, loss; an attack on the fortune of the Querent.",
-        "Reversed": "The same; burial and obsequies.",
+        "Reversed": "The same (degradation, destruction, reversal, infamy, dishonour, loss); burial and obsequies.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/2/23/Swords05.jpg",
         "Description":"A disdainful man looks after two retreating and dejected figures. Their swords lie upon the ground. He carries two others on his left shoulder, and a third sword is in his right hand, point to earth. He is the master in possession of the field. "
     },
@@ -882,7 +882,7 @@ export const cardData = [
         "OrdinalName": "XVI (The Tower)",
         "GenderedCard": "Non-specific",
         "Normal": "Misery, distress, indigentce, adversity, Calamity, disgrace, deception, ruin.",
-        "Reversed": "According to one account, the same in lesser degree; also oppression, imprisonment, tyranny.",
+        "Reversed": "According to one account, the same (misery, distress, indigentce, adversity, Calamity, disgrace, deception, ruin) in lesser degree; also oppression, imprisonment, tyranny.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg",
         "Description":"Occult explanations attached to this card are meagre and mostly disconcerting. It is idle to indicate that it depicts min in all its aspects, because it bears this evidence on the surface. It is said further that it contains the first allusion to a material building, but I do not conceive that the Tower is more or less material than the pillars which we have met with in three previous cases. I see nothing to warrant Papus in supposing that it is literally the fall of Adam, but there is more in favour of his alternative&#8212;that it signifies the materialization of the spiritual word. The bibliographer Christian imagines that it is the downfall of the mind, seeking to penetrate the mystery of God. I agree rather with Grand Orient that it is the ruin of the House of We, when evil has prevailed therein, and above all that it is the rending of a House of Doctrine. I understand that the reference is, however, to a House of Falsehood. It illustrates also in the most comprehensive way the old truth that \u2018except the Lord build the house, they labour in vain that build it.\u2019<br/>There is a sense in which the catastrophe is a reflection from the previous card, but not on the side of the symbolism which I have tried to indicate therein. It is more correctly a question of analogy; one is concerned with the fall into the material and animal state, while the other signifies destruction on the intellectual side. The Tower has been spoken of as the chastisement of pride and the intellect overwhelmed in the attempt to penetrate the Mystery of God; but in neither case do these explanations account for the two persons who are the living sufferers. The one is the literal word made void and the other its false interpretation. In yet a deeper sense, it may signify also the end of a dispensation, but there is no possibility here for the consideration of this involved question."
     },
@@ -918,7 +918,7 @@ export const cardData = [
         "OrdinalName": "XIX (The Sun)",
         "GenderedCard": "Non-specific",
         "Normal": "Material happiness, fortunate marriage, contentment.",
-        "Reversed": "The same in a lesser sense.",
+        "Reversed": "The same (material happiness, fortunate marriage, contentment) in a lesser sense.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg",
         "Description":"The naked child mounted on a white horse and displaying a red standard has been mentioned already as the better symbolism connected with this card. It is the destiny of the Supernatural East and the great and holy light which goes before the endless procession of humanity, coming out from the walled garden of the sensitive life and passing on the journey home. The card signifies, therefore, the transit from the manifest light of this world, represented by the glorious sun of earth, to the light of the world to come, which goes before aspiration and is typified by the heart of a child.<br/>But the last allusion is again the key to a different form or aspect of the symbolism. The sun is that of consciousness in the spirit - the direct as the antithesis of the reflected light. The characteristic type of humanity has become a little child therein&#8212;a child in the sense of simplicity and innocence in the sense of wisdom. In that simplicity, he bears the seal of Nature and of Art; in that innocence, he signifies the restored world. When the self-knowing spirit has dawned in the consciousness above the natural mind, that mind in its renewal leads forth the animal nature in a state of perfect conformity."
     },
