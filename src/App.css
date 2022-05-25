@@ -43,12 +43,17 @@ div {
 select, input, button {
 	font: 14pt "IM FELL English", serif;
 }
-.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.css-1rwt2y5-MuiButtonBase-root-MuiButton-root, .MuiTypography-root.MuiTypography-h6.MuiDialogTitle-root.css-bdhsul-MuiTypography-root-MuiDialogTitle-root, .MuiDialogContentText-root.MuiTypography-root.MuiTypography-body1.css-qfso29-MuiTypography-root-MuiDialogContentText-root, .MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButtonBase-root.css-1e6y48t-MuiButtonBase-root-MuiButton-root
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.css-1rwt2y5-MuiButtonBase-root-MuiButton-root, 
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.css-79xub-MuiButtonBase-root-MuiButton-root, 
+.MuiTypography-root.MuiTypography-h6.MuiDialogTitle-root.css-bdhsul-MuiTypography-root-MuiDialogTitle-root, 
+.MuiDialogContentText-root.MuiTypography-root.MuiTypography-body1.css-qfso29-MuiTypography-root-MuiDialogContentText-root, 
+.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButtonBase-root.css-1e6y48t-MuiButtonBase-root-MuiButton-root
 {
 	font-family: "IM FELL English", serif;
 }
 
-.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.css-1rwt2y5-MuiButtonBase-root-MuiButton-root
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.css-1rwt2y5-MuiButtonBase-root-MuiButton-root,
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.css-79xub-MuiButtonBase-root-MuiButton-root
 {
 font: 14pt "IM FELL English", serif;
 background-color:#eee;
