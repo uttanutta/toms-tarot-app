@@ -9,7 +9,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-//import Tooltip from '@mui/material/Tooltip';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
@@ -49,30 +48,66 @@ class TarotApp extends React.Component {
       selectedSuit: newSuit,
       remainingCardsBySuit: this.getAvailableOrdinals(newSuit),
       selectedOrdinal: null});
-    document.getElementById('Interpretation').className='pHidden'
+    document.getElementById('Interpretation').className='pHidden';
+    document.getElementById('PickButton').className='pHidden';
   }  
 
   handleReset(){
     const deckCopy = cardData.map((x) => x);
     const layoutCopy = layout.map((x) => x);
-    console.log("Deck reset!");
     this.setState({
       deck: deckCopy,
       picked: [],
       layout: layoutCopy,
       nextLayoutPosition: layoutCopy.splice(0,1),
       deckComplete:false,
-      pickedTitle:"You have picked no cards yet."
+      pickedTitle:"You have picked no cards yet.",
     })
+    document.getElementById('suit-select').value="";
+    document.getElementById('div-ordinal-select').className='pVisibleBlock';
+    document.getElementById('div-suit-select').className='pVisibleBlock';
+    document.getElementById('div-reset').className='pHidden';
+  }
+  handleFillAtRandom(){
+    //user has clicked the 'complete picking the deck for me' button
+    //how many cards left to pick? picked.length 0 indicates 11, or length == 11 will indicate 0 cards remain 
+    const pickedCount = (this.state.picked.length);
+    const remainingCount = (11-pickedCount);
+    //console.log("Remaining:",remainingCount);
+    const layoutCopy2 = layout.map((x) => x);
+    const layoutCopy3=layoutCopy2.splice(11-remainingCount,remainingCount)
+    var pickedCard;
+    var pickedCards=[];
+    for(var i=0; i<remainingCount; i++){
+      //there are 78 cards in the original deck, so the remainder must be 78-the number picked so far
+      const newIndex = Math.floor(Math.random() * ((78-pickedCount-i) ));
+      //console.log("newIndex: ",newIndex," from poss ", (78-pickedCount-i) );
+      const randPresentation = Math.random()<0.5 ? "Normal": "Reversed";
+      pickedCard=this.state.deck.splice(newIndex,1);
+      pickedCard[0].Presentation=randPresentation;
+      pickedCard[0].cardStatus=layoutCopy3[i].Title;
+      pickedCard[0].cardStatusDescription=layoutCopy3[i].CrossMeaning;
+      pickedCards=pickedCards.concat(pickedCard);
+    }
+    this.setState({
+      nextLayoutPosition:[{"Id": 99, "Title":"", "Action":"The final card has been chosen", "CrossMeaning":"All is revealed!"}],
+      pickedTitle:"Your deck is complete:",
+      deckComplete:true,
+      picked:this.state.picked.concat(pickedCards)
+    })
+  document.getElementById('Interpretation').className='pHidden';
+  document.getElementById('PickButton').className='pHidden';
+  document.getElementById('div-ordinal-select').className='pHidden';
+  document.getElementById('div-suit-select').className='pHidden';
+  document.getElementById('suit-select').value="";
+  document.getElementById('ordinal-select').value="";
   }
   handleCardPicked(e){
-    //don't use ===
+    //don't use '==='
     var index = this.state.deck.findIndex(x => x.Suit == this.state.selectedSuit && x.Ordinal == this.state.selectedOrdinal);
     var pickedCard=this.state.deck.splice(index,1)
-    pickedCard[0].Presentation=this.state.presentation; //document.getElementById('cardImage').className;
-    //console.log("Presentation ", pickedCard[0].Presentation)
+    pickedCard[0].Presentation=this.state.presentation; 
     pickedCard[0].cardStatus=this.state.nextLayoutPosition[0].Title; 
-    //console.log(this.state.nextLayoutPosition[0])   ;
     pickedCard[0].cardStatusDescription=this.state.nextLayoutPosition[0].CrossMeaning;    
     if(this.state.layout.length>0){    
       this.setState({
@@ -89,8 +124,9 @@ class TarotApp extends React.Component {
         picked:this.state.picked.concat(pickedCard)
       })
     }    
-    document.getElementById('Interpretation').className='pHidden'
-    document.getElementById('PickButton').className='pHidden'
+    document.getElementById('Interpretation').className='pHidden';
+    document.getElementById('PickButton').className='pHidden';
+    document.getElementById('div-reset').className='clearFloat';
     document.getElementById("ordinal-select").focus();
   }
 
@@ -99,7 +135,7 @@ class TarotApp extends React.Component {
       const newOrdinal =  e.target.value;
       this.setState({selectedOrdinal: newOrdinal}); //nested block is NOT redundant
       {newOrdinal ? document.getElementById('Interpretation').className='pVisibleInline': document.getElementById('Interpretation').className='pHidden'}
-      document.getElementById('PickButton').className='pVisibleInline'
+      {newOrdinal ? document.getElementById('PickButton').className='pVisibleInline': document.getElementById('PickButton').className='pHidden'}
     }
   }  
   handleInversion(){
@@ -121,9 +157,9 @@ class TarotApp extends React.Component {
     return (
       <div className="App">
         <h1 className="App-header">
-          Tom's Tarot App
+          Tarot Companion
         </h1>
-        <p>{"This is a companion guide to an actual reading, where you can draw the cards at random. Shuffle the deck. The power of the divination is increased if the deck is cut by the querent. They should consider their question, and whom it concerns. Then choose 11 cards to complete a divination using a method known as \u2018The Cross\u2019"}</p>
+        <p>{"This is a companion lookup to accompany a live Tarot reading, where you draw actual cards from a real deck. (Once you have begun, there is also an option here to complete the deck automatically.) The power of the divination is increased if the physical deck is cut by the querent. They should have considered their question, and whom or what it concerns beforehand. Then choose 11 cards to complete a divination using the method known as \u2018The Cross\u2019"}</p>
         <Suits
           handleSuitChange={(e) => this.handleSuitChange(e)}
           defaultSuit={currentSuit}
@@ -145,6 +181,7 @@ class TarotApp extends React.Component {
           pickedDescription={this.state.pickedTitle}
           presentation={this.state.presentation}
           handleCardPicked={(e) => this.handleCardPicked(e)}
+          handleFillAtRandom={() => this.handleFillAtRandom()}
           handleReset={() => this.handleReset()}
           nextAction={this.state.nextLayoutPosition[0].Action}
           crossMeaning={this.state.nextLayoutPosition[0].CrossMeaning}
@@ -211,7 +248,7 @@ function Interpretation(props){
 
 function Suits(props){
   return(
-    <div>
+    <div id="div-suit-select">
     <label htmlFor="suit-select">Choose a suit: </label>
     <select name="suits" id="suit-select" defaultValue="" onChange={props.handleSuitChange}>    
         <option value="" >-- Select Suit --</option>
@@ -228,8 +265,8 @@ function Suits(props){
 
 function Ordinals(props){
   return(
-    <div>
-    <label htmlFor="ordinal-select">Choose an ordinal:</label>
+    <div id="div-ordinal-select">
+    <label htmlFor="ordinal-select">then choose an ordinal:</label>
     <select name="ordinals" id="ordinal-select" default="" onChange={props.handleOrdinalChange}>
       <option value="" >-- Select Ordinal --</option>
         {props.options.map((data, key) => {  
@@ -244,10 +281,13 @@ function Ordinals(props){
 
 function Pick(props){
   return(
-    <div id="Pick">
+    <div id="Pick" >
       <div id="PickButton" className="pHidden">      
       <Button variant="outlined" color="primary" onClick={props.handleCardPicked}>
       Add Card to Deck
+    </Button>&nbsp;or&nbsp;
+    <Button variant="outlined" color="primary" onClick={props.handleFillAtRandom}>
+      Randomly Complete the Deck
     </Button>
       </div>
 
@@ -267,7 +307,7 @@ function Pick(props){
               );
             })}
       </div>  
-      <div className='clearFloat'>
+      <div id="div-reset" className='pHidden'>
 
 
     <ConfirmDialog 
@@ -292,7 +332,6 @@ function ConfirmDialog(props) {
 
   const handleReset = () => {
       setOpen(false);
-      console.log("Reset selected");
       props.resetDeck();
     };
 

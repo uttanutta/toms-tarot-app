@@ -176,7 +176,7 @@ export const cardData = [
         "OrdinalName": "Ace",
         "GenderedCard": "Non-specific",
         "Normal": "House of the true heart, joy, content, abode, nourishment, abundance, fertility, holy table, happiness.  Also inflexible will, unalterable law.",
-        "Reversed": "Houe of the false heart, mutation, instability, revolution.",
+        "Reversed": "House of the false heart, mutation, instability, revolution.",
         "Image":"https://upload.wikimedia.org/wikipedia/commons/3/36/Cups01.jpg",
         "Description":"The waters are beneath, and thereon are water-lilies; the hand issues from the cloud, holding in its palm the cup, from which four streams are pouring; a dove, bearing in its bill a cross-marked Host, descends to place the Wafer in the Cup; the dew of water is falling on all sides. It is an intimation of that which may lie behind the Lesser Arcana. "
     },
