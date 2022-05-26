@@ -38,7 +38,7 @@ class TarotApp extends React.Component {
   
   getAvailableOrdinals(suit){
     const changedArray=this.state.deck.filter((el) => {      
-      return el.Suit==suit;
+      return el.Suit===suit;
     });
     return{"remaining":changedArray}
   }
@@ -66,6 +66,7 @@ class TarotApp extends React.Component {
     })
   }
   handleCardPicked(e){
+    //don't use ===
     var index = this.state.deck.findIndex(x => x.Suit == this.state.selectedSuit && x.Ordinal == this.state.selectedOrdinal);
     var pickedCard=this.state.deck.splice(index,1)
     pickedCard[0].Presentation=this.state.presentation; //document.getElementById('cardImage').className;
@@ -96,7 +97,7 @@ class TarotApp extends React.Component {
   handleOrdinalChange(e) {   
     if(!this.state.deckComplete){
       const newOrdinal =  e.target.value;
-      this.setState({selectedOrdinal: newOrdinal});
+      this.setState({selectedOrdinal: newOrdinal}); //nested block is NOT redundant
       {newOrdinal ? document.getElementById('Interpretation').className='pVisibleInline': document.getElementById('Interpretation').className='pHidden'}
       document.getElementById('PickButton').className='pVisibleInline'
     }
@@ -113,6 +114,7 @@ class TarotApp extends React.Component {
     const filteredOrdinals = this.state.deck.filter(
       (o) => o.Suit === currentSuit
     );
+    //Don't use ===
     const filteredCard = this.state.deck.filter(
             (o) => o.Ordinal == selectedOrdinal && o.Suit == currentSuit
     );
@@ -183,7 +185,7 @@ function Interpretation(props){
           </button>           
         </div>
         <HtmlTooltip title={(props.result[0]) ? <p className="LongDescription" dangerouslySetInnerHTML={{__html: LongDescription}}></p> : ""} arrow>
-          {<img src={(props.result[0]) ? props.result[0].Image : ""}  id="cardImage" className={props.presentation} />}
+          {<img src={(props.result[0]) ? props.result[0].Image : ""}  alt="" id="cardImage" className={props.presentation} />}
           </HtmlTooltip>
           <br/>     
           <div  id="Gendered" className="gendered">
@@ -255,7 +257,7 @@ function Pick(props){
             {props.pickedCards.map((data, key) => {  
               return (
                 <div className={"floatedLeft "} key={data.Id} >                
-                <div className={"NarrowDiv30pc floatedLeft"} ><img src={data.Image} className={data.Presentation=="Normal"? "thumb Normal": "thumb Reversed"}/></div>
+                <div className={"NarrowDiv30pc floatedLeft"} ><img src={data.Image} alt=""  className={data.Presentation=="Normal"? "thumb Normal": "thumb Reversed"}/></div>
                 <div className={"NarrowDiv60pc floatedLeft"} >
                   <strong title={data.cardStatusDescription}>{data.cardStatus}:</strong>&nbsp;
                   <i>{data.Title},&nbsp;({data.Presentation}).</i>&nbsp;
