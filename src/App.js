@@ -13,6 +13,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
 
+
 class TarotApp extends React.Component {
   //This top-level class is also named as the export default at the EOF
   constructor(props){
@@ -24,17 +25,16 @@ class TarotApp extends React.Component {
       deck: deckCopy,
       picked: [],
       remainingCardsBySuit: null,
-      selectedOrdinal: null,
+      selectedOrdinal: "",
       presentation: "Normal",
       layout: layoutCopy,
       nextLayoutPosition: layoutCopy.splice(0,1),
       deckComplete:false,
       pickedTitle:"You have picked no cards yet.",
-      confirmOpen:false,      
+      confirmOpen:false,    
+      previewActive:false,  
     }
   }
-  
-  
   getAvailableOrdinals(suit){
     const changedArray=this.state.deck.filter((el) => {      
       return el.Suit===suit;
@@ -47,11 +47,16 @@ class TarotApp extends React.Component {
     this.setState({
       selectedSuit: newSuit,
       remainingCardsBySuit: this.getAvailableOrdinals(newSuit),
-      selectedOrdinal: null});
-    document.getElementById('Interpretation').className='pHidden';
-    document.getElementById('PickButton').className='pHidden';
+      selectedOrdinal: ""});
   }  
-
+  handleOrdinalChange(e) {   
+    if(!this.state.deckComplete){
+      const newOrdinal =  e.target.value;
+      this.setState({
+        selectedOrdinal: newOrdinal
+      }); //nested block is NOT redundant
+    }
+  } 
   handleReset(){
     const deckCopy = cardData.map((x) => x);
     const layoutCopy = layout.map((x) => x);
@@ -62,18 +67,15 @@ class TarotApp extends React.Component {
       nextLayoutPosition: layoutCopy.splice(0,1),
       deckComplete:false,
       pickedTitle:"You have picked no cards yet.",
+      selectedSuit:"",
     })
-    document.getElementById('suit-select').value="";
-    document.getElementById('div-ordinal-select').className='pVisibleBlock';
-    document.getElementById('div-suit-select').className='pVisibleBlock';
-    document.getElementById('div-reset').className='pHidden';
+    //document.getElementById('suit-select').value="";
   }
   handleFillAtRandom(){
     //user has clicked the 'complete picking the deck for me' button
     //how many cards left to pick? picked.length 0 indicates 11, or length == 11 will indicate 0 cards remain 
     const pickedCount = (this.state.picked.length);
     const remainingCount = (11-pickedCount);
-    //console.log("Remaining:",remainingCount);
     const layoutCopy2 = layout.map((x) => x);
     const layoutCopy3=layoutCopy2.splice(11-remainingCount,remainingCount)
     var pickedCard;
@@ -81,7 +83,6 @@ class TarotApp extends React.Component {
     for(var i=0; i<remainingCount; i++){
       //there are 78 cards in the original deck, so the remainder must be 78-the number picked so far
       const newIndex = Math.floor(Math.random() * ((78-pickedCount-i) ));
-      //console.log("newIndex: ",newIndex," from poss ", (78-pickedCount-i) );
       const randPresentation = Math.random()<0.5 ? "Normal": "Reversed";
       pickedCard=this.state.deck.splice(newIndex,1);
       pickedCard[0].Presentation=randPresentation;
@@ -93,14 +94,11 @@ class TarotApp extends React.Component {
       nextLayoutPosition:[{"Id": 99, "Title":"", "Action":"The final card has been chosen", "CrossMeaning":"All is revealed!"}],
       pickedTitle:"Your deck is complete:",
       deckComplete:true,
+      selectedOrdinal:"",
       picked:this.state.picked.concat(pickedCards)
     })
-  document.getElementById('Interpretation').className='pHidden';
-  document.getElementById('PickButton').className='pHidden';
-  document.getElementById('div-ordinal-select').className='pHidden';
-  document.getElementById('div-suit-select').className='pHidden';
-  document.getElementById('suit-select').value="";
-  document.getElementById('ordinal-select').value="";
+  //document.getElementById('suit-select').value="";
+  //document.getElementById('ordinal-select').value="";
   }
   handleCardPicked(e){
     //don't use '==='
@@ -113,7 +111,8 @@ class TarotApp extends React.Component {
       this.setState({
         nextLayoutPosition:this.state.layout.splice(0,1),
         pickedTitle:"You have picked " + (this.state.picked.length + 1)+ " of the 11 cards, so far:",
-        picked:this.state.picked.concat(pickedCard)
+        picked:this.state.picked.concat(pickedCard),
+        selectedOrdinal:"",
     });      
     }
     else{
@@ -121,23 +120,14 @@ class TarotApp extends React.Component {
         nextLayoutPosition:[{"Id": 99, "Title":"", "Action":"The final card has been chosen", "CrossMeaning":"All done!"}],
         pickedTitle:"Your deck is complete:",
         deckComplete:true,
-        picked:this.state.picked.concat(pickedCard)
+        picked:this.state.picked.concat(pickedCard),
+        selectedOrdinal:"",
       })
     }    
-    document.getElementById('Interpretation').className='pHidden';
-    document.getElementById('PickButton').className='pHidden';
-    document.getElementById('div-reset').className='clearFloat';
     document.getElementById("ordinal-select").focus();
   }
 
-  handleOrdinalChange(e) {   
-    if(!this.state.deckComplete){
-      const newOrdinal =  e.target.value;
-      this.setState({selectedOrdinal: newOrdinal}); //nested block is NOT redundant
-      {newOrdinal ? document.getElementById('Interpretation').className='pVisibleInline': document.getElementById('Interpretation').className='pHidden'}
-      {newOrdinal ? document.getElementById('PickButton').className='pVisibleInline': document.getElementById('PickButton').className='pHidden'}
-    }
-  }  
+ 
   handleInversion(){
     this.state.presentation=="Normal" ? this.setState({presentation:"Reversed"}) : this.setState({presentation:"Normal"});
     document.getElementById("ordinal-select").focus();
@@ -150,7 +140,7 @@ class TarotApp extends React.Component {
     const filteredOrdinals = this.state.deck.filter(
       (o) => o.Suit === currentSuit
     );
-    //Don't use ===
+    //Don't use the triple equality operator here ===
     const filteredCard = this.state.deck.filter(
             (o) => o.Ordinal == selectedOrdinal && o.Suit == currentSuit
     );
@@ -164,29 +154,40 @@ class TarotApp extends React.Component {
           handleSuitChange={(e) => this.handleSuitChange(e)}
           defaultSuit={currentSuit}
           currentSuit={currentSuit}
+          deckComplete={this.state.deckComplete}
         />  
         <Ordinals 
           options={filteredOrdinals}
           handleOrdinalChange={(e) => this.handleOrdinalChange(e)}
           selectedOrdinal={currentOrdinal}
+          deckComplete={this.state.deckComplete}
+          initialOrdinal={this.state.selectedOrdinal}
         /> 
+        <CompleteAtRandom 
+          handleFillAtRandom={() => this.handleFillAtRandom()} 
+          deckComplete={this.state.deckComplete}
+          selectedOrdinal={this.state.selectedOrdinal}
+        />
         <Interpretation
           result={filteredCard}
           presentation={this.state.presentation}
           handleInversion={() => this.handleInversion()}
+          selectedOrdinal={this.state.selectedOrdinal}
         />  
         <Pick 
+          handleCardPicked={(e) => this.handleCardPicked(e)} 
+          selectedOrdinal={this.state.selectedOrdinal} 
+        /> 
+        <Picked 
           pickedCards={this.state.picked}
           pickedTitle={this.state.pickedTitle}
-          pickedDescription={this.state.pickedTitle}
-          presentation={this.state.presentation}
-          handleCardPicked={(e) => this.handleCardPicked(e)}
-          handleFillAtRandom={() => this.handleFillAtRandom()}
-          handleReset={() => this.handleReset()}
           nextAction={this.state.nextLayoutPosition[0].Action}
           crossMeaning={this.state.nextLayoutPosition[0].CrossMeaning}
         /> 
-        
+        <Reset 
+          resetDeck={() => this.handleReset()}
+          pickedCardsLength={this.state.picked.length}
+        />
         <p>Listen to music. It may help:<br/>
         <audio title="Neputune, The Mystic (Gustav Holst) - from The Internet Archive" src="https://ia803106.us.archive.org/22/items/lp_holst-the-planets_gustav-holst-leopold-stokowski-los-angeles/disc1/02.03.%20The%20Planets%3A%20Neptune%2C%20The%20Mystic.mp3" controls />                
         </p>
@@ -201,20 +202,20 @@ function Interpretation(props){
   const ldIntro="<b>Description of the card and its symbols:</b>&nbsp;";
   const LongDescription = props.result[0]? ldIntro + props.result[0].Description : "";
   const HtmlTooltip = styled(({ className, ...props }) => (
-        <Tooltip {...props} classes={{ popper: className }} placement="right"/>
-      ))      (({ theme }) => ({
-        [`& .${tooltipClasses.tooltip}`]: {
-          backgroundColor: '#fff',
-          color: 'rgba(0, 0, 0, 0.5)',
-          maxWidth: 400,
-          fontSize: theme.typography.pxToRem(12),
-          border: '1px solid #dadde9',
-        },
-      })
-      );
+  <Tooltip {...props} classes={{ popper: className }} placement="bottom"/>
+    ))      (({ theme }) => ({
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#fff',
+        color: 'rgba(0, 0, 0, 0.5)',
+        maxWidth: 400,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+      },
+    })
+    );
   return(
     <div>
-      <div id="Interpretation" className="pHidden">
+      <div id="Interpretation" className={(props.selectedOrdinal) ? 'pVisibleInline':'pHidden'}>
         <div>
           <button id="invertButton" className="pick" 
             onClick={props.handleInversion}
@@ -248,9 +249,9 @@ function Interpretation(props){
 
 function Suits(props){
   return(
-    <div id="div-suit-select">
+    <div id="div-suit-select" className={props.deckComplete?'pHidden':'pVisibleBlock'}>
     <label htmlFor="suit-select">Choose a suit: </label>
-    <select name="suits" id="suit-select" defaultValue="" onChange={props.handleSuitChange}>    
+    <select name="suits" id="suit-select" value={props.currentSuit} onChange={props.handleSuitChange}>    
         <option value="" >-- Select Suit --</option>
         <option value="Trumps" >Trumps</option>
         <option value="Cups">Cups</option>
@@ -265,9 +266,9 @@ function Suits(props){
 
 function Ordinals(props){
   return(
-    <div id="div-ordinal-select">
-    <label htmlFor="ordinal-select">then choose an ordinal:</label>
-    <select name="ordinals" id="ordinal-select" default="" onChange={props.handleOrdinalChange}>
+    <div id="div-ordinal-select" className={props.deckComplete?'pHidden':'pVisibleBlock'}>
+    <label htmlFor="ordinal-select">Choose the ordinal:</label>
+    <select name="ordinals" id="ordinal-select" default="" value={props.selectedOrdinal} onChange={props.handleOrdinalChange}>
       <option value="" >-- Select Ordinal --</option>
         {props.options.map((data, key) => {  
           return (
@@ -278,67 +279,65 @@ function Ordinals(props){
     </div>  
   )
 }
-
+function Picked(props){
+  return(
+    <div>
+    {/* EG: The next card shall be ... You have picked x of the 11 cards, so far: */}
+    <p>{props.pickedTitle}&nbsp;<i>{props.nextAction}</i>.&nbsp;{props.crossMeaning}</p>
+        {props.pickedCards.map((data, key) => {  
+          return (
+            <div className={"floatedLeft "} key={data.Id} >                
+            <div className={"NarrowDiv30pc floatedLeft"} ><img src={data.Image} alt=""  className={data.Presentation=="Normal"? "thumb Normal": "thumb Reversed"}/></div>
+            <div className={"NarrowDiv60pc floatedLeft"} >
+              <strong title={data.cardStatusDescription}>{data.cardStatus}:</strong>&nbsp;
+              <i>{data.Title},&nbsp;({data.Presentation}).</i>&nbsp;
+              {data.presentation=="Normal"? data.Normal: data.Reversed}
+            </div>
+            </div>
+          );
+        })}
+  </div>  
+  )
+}
+function CompleteAtRandom(props){
+  return(
+    <div  className={(props.deckComplete || props.selectedOrdinal)?'pHidden':'pVisibleBlock'}>
+    or: <Button variant="outlined" color="primary" onClick={props.handleFillAtRandom}>
+    Randomly Complete the Deck
+  </Button>
+  </div>
+  )
+}
 function Pick(props){
   return(
-    <div id="Pick" >
-      <div id="PickButton" className="pHidden">      
+    <div id="Pick"  className={props.selectedOrdinal? 'pVisibleInline':'pHidden'}>
+      <div id="PickButton">      
       <Button variant="outlined" color="primary" onClick={props.handleCardPicked}>
       Add Card to Deck
-    </Button>&nbsp;or&nbsp;
-    <Button variant="outlined" color="primary" onClick={props.handleFillAtRandom}>
-      Randomly Complete the Deck
     </Button>
+
       </div>
-
-      <div>
-        {/* EG: The next card shall be ... You have picked x of the 11 cards, so far: */}
-        <p>{props.pickedTitle}&nbsp;<i>{props.nextAction}</i>.&nbsp;{props.crossMeaning}</p>
-            {props.pickedCards.map((data, key) => {  
-              return (
-                <div className={"floatedLeft "} key={data.Id} >                
-                <div className={"NarrowDiv30pc floatedLeft"} ><img src={data.Image} alt=""  className={data.Presentation=="Normal"? "thumb Normal": "thumb Reversed"}/></div>
-                <div className={"NarrowDiv60pc floatedLeft"} >
-                  <strong title={data.cardStatusDescription}>{data.cardStatus}:</strong>&nbsp;
-                  <i>{data.Title},&nbsp;({data.Presentation}).</i>&nbsp;
-                  {data.presentation=="Normal"? data.Normal: data.Reversed}
-                </div>
-                </div>
-              );
-            })}
-      </div>  
-      <div id="div-reset" className='pHidden'>
-
-
-    <ConfirmDialog 
-       resetDeck={props.handleReset}
-    />
-      </div> 
     </div>
-  
   )
 }
 
-function ConfirmDialog(props) {
+function Reset(props) {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleReset = () => {
       setOpen(false);
       props.resetDeck();
     };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Reset the Deck
+    <div id="div-reset" className={props.pickedCardsLength>0? "clearFloat": "pHidden"}>
+      <Button variant="outlined" onClick={handleClickOpen} >
+        Reset the Deck 
       </Button>
       <Dialog
         open={open}
