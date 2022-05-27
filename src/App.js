@@ -21,7 +21,7 @@ class TarotApp extends React.Component {
     const deckCopy = cardData.map((x) => x);
     const layoutCopy = layout.map((x) => x);
     this.state = {
-      selectedSuit: null,
+      selectedSuit: "",
       deck: deckCopy,
       picked: [],
       remainingCardsBySuit: null,
@@ -69,7 +69,6 @@ class TarotApp extends React.Component {
       pickedTitle:"You have picked no cards yet.",
       selectedSuit:"",
     })
-    //document.getElementById('suit-select').value="";
   }
   handleFillAtRandom(){
     //user has clicked the 'complete picking the deck for me' button
@@ -97,8 +96,6 @@ class TarotApp extends React.Component {
       selectedOrdinal:"",
       picked:this.state.picked.concat(pickedCards)
     })
-  //document.getElementById('suit-select').value="";
-  //document.getElementById('ordinal-select').value="";
   }
   handleCardPicked(e){
     //don't use '==='
